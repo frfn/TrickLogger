@@ -6,10 +6,14 @@ export default class App extends Component {
     super(props);
 
     this.state ={
-
+      tricks: [],
+      toggleButton: false,
+      addNewTrick: {
+        trick: undefined,
+      },
+      yourCool: false
     }
   }
-
 
 
 
