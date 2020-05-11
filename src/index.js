@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Container/App';
+import TF from './TestFiles/CounterWithReactHooks';
 import * as serviceWorker from './Container/serviceWorker';
 
 ReactDOM.render(
