@@ -14,6 +14,7 @@ const Header = () => {
 
     return(
         <Aux>
+            {/* DIV focuses on Title */}
             <div>
                 <h1>Trick Logger</h1>
                 <h3>By F. Fadrigalan</h3>
@@ -30,7 +31,7 @@ const Header = () => {
             </div>
 
             <div>
-                <h2> Please fill form to start! </h2>
+                <h2> Log in to start! </h2>
             </div>
         </Aux>
     );

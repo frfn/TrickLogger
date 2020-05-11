@@ -20,8 +20,10 @@ class Tricks extends PureComponent {
      - static contextType = <ContextFileName>; 
     */
 
+    // static contextType = TricksContext; 
+
     render() {
-        /* PROPS are click, tricks */
+        /* PROPS are click */
         const {click} = this.props;
 
         return (
@@ -31,8 +33,13 @@ class Tricks extends PureComponent {
                 <h2> Tricks For Today? </h2>
                 <p> Press on ' + ' button to increase, ' – ' to decrease count </p>
             </div>
+
+            {/* <div>Bonus: Access contextType by: {this.context.trickList}</div> */}
+
             <hr></hr>
+
             {/* Used two context files, works... was not needed though. */}
+            {/* To use .Consumer, open up a {context => { ..code.. }}  | to use context, do context.trickList...*/}
             <TricksContext.Consumer>
                 {list => {
                     /* id & key are RESERVED words */

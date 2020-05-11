@@ -70,7 +70,7 @@ export default class Body extends Component {
         }
         return(
             <Aux>
-                {/* Focuses on Form Fields */}
+                {/* DIV focuses on Form Fields */}
                 <div>
                     <form>
                         {/* DIV focuses on input for name of trick */}
@@ -105,7 +105,7 @@ export default class Body extends Component {
                     </form>
                 </div>
 
-                {/* Focuses on toggleButton */}
+                {/* DIV focuses on toggleButton */}
                 <div>
                     <h2> Please click on toggle button to render trick list </h2>
                     <button onClick={toggleButton}> Show </button>

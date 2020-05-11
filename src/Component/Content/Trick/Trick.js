@@ -10,7 +10,7 @@ const Trick = ( { nameOfTrick, click, indexNumber } ) => {
     /* const reference = useRef(null) */
     /* useEffect(() => { reference.current.focus() }, []) */
 
-    // You can do getSnapshotBeforeUpdate in React hooks. :\
+    // You can't do getSnapshotBeforeUpdate in React hooks. :\
 
     // 1
     // componentDidMount
@@ -75,4 +75,5 @@ const Trick = ( { nameOfTrick, click, indexNumber } ) => {
 
 /* memo takes a snapshot (memoizes) and ONLY renders if there is change */
 /* should be used with useEffect() though... we don't have one here.. but it's good to know how to use. */
+/* useEffect(() => { ..code.. }, [ propToLookAt ] <-- important part. ) */
 export default memo(Trick);

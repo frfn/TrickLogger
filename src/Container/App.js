@@ -8,7 +8,20 @@ Errors mostly happened with individual counter for trick. Initially thought of a
 Errors also happened while finding the INDEX number of the tricks. Method 'findIndex'
  - The reason that we were getting errors is because of HOW the variable was passed IN Trick.js
  - I solved the issue by correctly using the prop.
+*/
 
+/* 
+Steps to completion.
+ 1. started with components
+    - with Trick.js --> Tricks.js --> contexts --> Body.js --> Header.js --> App.js
+
+ 2. Looked at Part 4 folder to see what features of React I will use
+    - memo, Aux, lifecycle methods.. CC/FC, context, keys/id, multiple input fields, array methods.. map, findIndex, 
+    - Good practices like: lean Render code in App.js, split components, optimization of components, context for info
+
+ 3. When facing problems, used console.log() to see issues as well as working with the errors on screen.
+
+ 4. Simplify things, don't make it harder than it already is... do this more often.
 */
 
 import React, { Component } from 'react';
@@ -28,6 +41,7 @@ export default class App extends Component {
   constructor(props){
     super(props);
 
+    /* Created state based on what we MOSTLY needed */
     this.state ={
       tricks: [],
       authenticated: false,
@@ -40,19 +54,22 @@ export default class App extends Component {
     }
   }
 
-  /* Sets toggleState to true|false, will display trick list */
+  /* Sets toggleState to true|false, will display trick list, depends on last value! */
   toggleButton = () => {
     this.setState(state => ({
       toggleState: !state.toggleState
+      /* setState takes in second argument, a callback function, here used to console.log() */
     }), () => { console.log(this.state.toggleState)})
   }
 
+  /* sets authentication to true */
   logIn = () => {
     this.setState({
       authenticated: true
-    })
+    }, () => {console.log(this.state.authenticated)})
   }
 
+  /* sets authentication to false */
   logOut = () => {
     this.setState({
       authenticated: false
@@ -62,9 +79,10 @@ export default class App extends Component {
   /* for the FORMS, check Body.js */
   changeHandler = (e) => {
     const {name, value} = e.target;
+    const creatingTrick = {...this.state.createTrick}
     this.setState({
       createTrick: {
-        ...this.state.createTrick,
+        ...creatingTrick,
         [name]: value
       }
     }) // , () => { console.log(this.state.createTrick)} – for
@@ -73,21 +91,21 @@ export default class App extends Component {
   /* for the FORMS, check Body.js */
   clickSubmitHandler = (e) => {
     e.preventDefault();
-    const list = this.state.tricks;
-    const trick = this.state.createTrick;
+    const list = [...this.state.tricks];
+    const trick = {...this.state.createTrick};
     list.push(trick)
     this.setState({
       tricks: list,
       createTrick: {
-        ...this.state.createTrick,
-        counter: 0
+        ...trick,
+        counter: 0 // initialized to zero to reset Counter for next object!
       }
     })
   }
 
   /* Deletes by index */
   clickDeleteHandler = (index) => {
-    const list = this.state.tricks;
+    const list = [...this.state.tricks];
     list.splice(index, 1);
     this.setState({
       tricks: list
@@ -102,7 +120,7 @@ export default class App extends Component {
   /* We are UPDATING THE VALUE inside the object, not the whole state. */
   increaseCounter = (name) => {
     const trickIndex = this.findIndex(name);
-    const list = this.state.tricks;
+    const list = [...this.state.tricks];
     const trick = list[trickIndex];
     trick.counter += 1
     this.setState({
@@ -113,9 +131,10 @@ export default class App extends Component {
   /* From above, we are not depending on State, so we don't have to worry about unexpected behavior. */
   decreaseCounter = (name) => {
     const trickIndex = this.findIndex(name);
-    const list = this.state.tricks;
+    const list = [...this.state.tricks];
     const trick = list[trickIndex];
 
+    /* if at zero, no more decreasing. */
     if(trick.counter > 0){
       trick.counter -= 1
     }
@@ -124,10 +143,10 @@ export default class App extends Component {
     })
   }
 
-  /* getCount to retrieve the value for counter for our trick */
+  /* retrieve the value for counter for our trick */
   getCount = (name) => {
     const trickIndex = this.findIndex(name);
-    const list = this.state.tricks;
+    const list = [...this.state.tricks];
     const trick = list[trickIndex];
     const count = trick.counter
     return count;
@@ -138,7 +157,10 @@ export default class App extends Component {
     const {toggleState, tricks, authenticated} = this.state;
 
     return(
+      /* Aux.js makes it possible to return multiple adjacent JSX! */
       <Aux className={styles.App}>
+
+        {/* .Provider grabs value and makes it possible to use elsewhere without prop chaining! */}
         <AuthContext.Provider 
           value={{
             authenticated: authenticated,
@@ -150,31 +172,32 @@ export default class App extends Component {
           <Header />
           <hr></hr>
 
-          <TricksContext.Provider
+        </AuthContext.Provider>
+
+        <TricksContext.Provider
+          value={{
+            trickList: tricks
+          }}
+        >
+          <CounterContext.Provider
             value={{
-              trickList: tricks
+              /* The reason why this works, we are getting NAME of trick */
+              counter: this.getCount,
+              increaseCounter: this.increaseCounter,
+              decreaseCounter: this.decreaseCounter
             }}
           >
-            <CounterContext.Provider
-              value={{
-                /* The reason why this works, we are getting NAME of trick */
-                counter: this.getCount,
-                increaseCounter: this.increaseCounter,
-                decreaseCounter: this.decreaseCounter
-              }}
-            >
-              <Body 
-                tricks={tricks}
-                toggleState={toggleState}
-                toggleButton={this.toggleButton}
-                changeHandler={this.changeHandler}
-                clickSubmitHandler={this.clickSubmitHandler}
-                clickDeleteHandler={this.clickDeleteHandler}
-              />
+            {authenticated ? <Body 
+              tricks={tricks}
+              toggleState={toggleState}
+              toggleButton={this.toggleButton}
+              changeHandler={this.changeHandler}
+              clickSubmitHandler={this.clickSubmitHandler}
+              clickDeleteHandler={this.clickDeleteHandler}
+            /> : ''}
 
-            </CounterContext.Provider>
-          </TricksContext.Provider>
-        </AuthContext.Provider>
+          </CounterContext.Provider>
+        </TricksContext.Provider>
       </Aux>
     );
   }

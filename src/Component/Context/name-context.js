@@ -1,8 +1,8 @@
-/* Was not used... would be more work to get name of trick */
+/* Was not used... would be more work to get name of trick, would be a hassle! */
 import { createContext } from 'react'
 
 const nameContext = createContext({
-    nameOfTrick: ''
+    nameOfTrick: () => {}
 });
 
 export default nameContext;
