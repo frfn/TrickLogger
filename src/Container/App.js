@@ -79,13 +79,13 @@ export default class App extends Component {
   /* for the FORMS, check Body.js */
   changeHandler = (e) => {
     const {name, value} = e.target;
-    const creatingTrick = {...this.state.createTrick}
+    const creatingTrick = {...this.state.createTrick}  // we need other values too!
     this.setState({
       createTrick: {
-        ...creatingTrick,
+        ...creatingTrick,  // this will give us those values, we tested out and it only overwrites one of the values
         [name]: value
       }
-    }) // , () => { console.log(this.state.createTrick)} – for
+    }, () => { console.log(this.state.createTrick)}) // , () => { console.log(this.state.createTrick)} – for
   }
 
   /* for the FORMS, check Body.js */
