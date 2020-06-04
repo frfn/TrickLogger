@@ -19,7 +19,7 @@ const Trick = ( { nameOfTrick, click, indexNumber } ) => {
     }, []) */
 
     // 2
-    // shouldComponentUpdate
+    // shouldComponentUpdate for one variable, if you want to see if all, use React.memo
     /* useEffect(() => {
         points to prop, sees if prop updates then will run code inside useEffect()
     }, [props.xyz]) */
