@@ -8,6 +8,8 @@ https://hub.packtpub.com/getting-started-with-react-hooks-by-building-a-counter-
 const INCREMENT = [1, 2, 5, 10]
 
 const Counter = () => {
+    /* this.state === counter */
+    /* this.setState === setCounter */
     const [ counter, setCounter ] = useState(0);
 
     useEffect(() => {
@@ -16,7 +18,7 @@ const Counter = () => {
 
     const add = (value) => {
         setCounter(prevCounter => {
-        return prevCounter + value
+            return prevCounter + value;
         })
     }
 

@@ -40,6 +40,7 @@ class Tricks extends PureComponent {
 
             {/* Used two context files, works... was not needed though. */}
             {/* To use .Consumer, open up a {context => { ..code.. }}  | to use context, do context.trickList...*/}
+            {/* this is just passing an array of objects and using map to iterate through the objects one by one. :D */}
             <TricksContext.Consumer>
                 {list => {
                     /* id & key are RESERVED words */
